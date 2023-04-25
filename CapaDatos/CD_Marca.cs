@@ -1,27 +1,26 @@
-﻿using System;
+﻿using CapaEntidad;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CapaEntidad;
-using System.Data.SqlClient;
-using System.Data;
-
 
 namespace CapaDatos
 {
-    public class CD_Categoria
+    public class CD_Marca
     {
 
-        public List<Categoria> Listar()
+        public List<Marca> Listar()
         {
-            List<Categoria> lista = new List<Categoria>();
+            List<Marca> lista = new List<Marca>();
 
             try
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    string query = "select IdCategoria, Description, Activo from CATEGORIA";
+                    string query = "select IdMarca, Descripcion, Activo from Marca";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
 
@@ -31,10 +30,10 @@ namespace CapaDatos
                     {
                         while (dr.Read())
                         {
-                            lista.Add(new Categoria()
+                            lista.Add(new Marca()
                             {
-                                IdCategoria = Convert.ToInt32(dr["IdCategoria"]),
-                                Description = dr["Description"].ToString(),
+                                IdMarca = Convert.ToInt32(dr["IdMarca"]),
+                                Descripcion = dr["Descripcion"].ToString(),
                                 Activo = Convert.ToBoolean(dr["Activo"]),
                             });
                         }
@@ -43,14 +42,14 @@ namespace CapaDatos
             }
             catch
             {
-                lista = new List<Categoria>();
+                lista = new List<Marca>();
             }
 
 
             return lista;
         }
 
-        public int Registrar(Categoria obj, out string Mensaje)
+        public int Registrar(Marca obj, out string Mensaje)
         {
             int idautogenerado = 0;
 
@@ -60,8 +59,8 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    SqlCommand cmd = new SqlCommand("sp_RegistrarCategoria", oconexion);
-                    cmd.Parameters.AddWithValue("Description", obj.Description);
+                    SqlCommand cmd = new SqlCommand("sp_RegistrarMarca", oconexion);
+                    cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
                     cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -83,7 +82,7 @@ namespace CapaDatos
             return idautogenerado;
         }
 
-        public bool Editar(Categoria obj, out string Mensaje)
+        public bool Editar(Marca obj, out string Mensaje)
         {
             bool resultado = false;
 
@@ -93,9 +92,9 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    SqlCommand cmd = new SqlCommand("sp_EditarCategoria", oconexion);
-                    cmd.Parameters.AddWithValue("IdCategoria", obj.IdCategoria);
-                    cmd.Parameters.AddWithValue("Description", obj.Description);
+                    SqlCommand cmd = new SqlCommand("sp_EditarMarca", oconexion);
+                    cmd.Parameters.AddWithValue("IdMarca", obj.IdMarca);
+                    cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
                     cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -127,8 +126,8 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    SqlCommand cmd = new SqlCommand("sp_EliminarCategoria", oconexion);
-                    cmd.Parameters.AddWithValue("IdCategoria", id);
+                    SqlCommand cmd = new SqlCommand("sp_EliminarMarca", oconexion);
+                    cmd.Parameters.AddWithValue("IdMarca", id);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;

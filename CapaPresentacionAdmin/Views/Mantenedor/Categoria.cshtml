@@ -48,7 +48,7 @@
             <div class="modal-body ">
                 <div class="row g-1">
 
-                    <input id="txtid" type="hidden" value="0" />
+                    <input id="txtid" type="text" value="0" />
 
 
                     <div class="col-sm-6">
@@ -136,7 +136,7 @@
             $("#mensajeError").hide();
 
             if (json != null) {
-                $("#txtid").val(IdCategoria)
+                $("#txtid").val(json.IdCategoria)
                 $("#txtdescripcion").val(json.Description);
                 $("#cboactivo").val(json.Activo == true ? 1 : 0);
             }
@@ -194,9 +194,10 @@
 
         function Guardar() {
             var Categoria = {
-                IdUsuario: $("#txtid").val(),
-                Activo: $("#cboactivo").val() == 1 ? true : false,
-                Apellidos: $("#txtdescripcion").val(),
+                IdCategoria: $("#txtid").val(),
+                Description: $("#txtdescripcion").val(),
+                Activo: $("#cboactivo").val() == 1 ? true : false
+                
             }
 
             jQuery.ajax({
@@ -210,10 +211,10 @@
 
 
                     //Usuario nuevo
-                    if (Usuario.IdCategoria == 0) {
+                    if (Categoria.IdCategoria == 0) {
 
                         if (data.resultado != 0) {
-                            Categoria.IdUsuario = data.resultado;
+                            Categoria.IdCategoria = data.resultado;
                             tabladata.row.add(Categoria).draw(false);
 
                             $("#FormModal").modal("hide");
@@ -240,9 +241,9 @@
                     }
                 },
                 error: function (error) {
+                    $(".modal-body").LoadingOverlay("hide")
                     $("#mensajeError").text("Erro ajax");
                     $("#mensajeError").show();
-                    $(".modal-body").LoadingOverlay("hide")
 
                 },
                 beforeSend: function () {
