@@ -9,6 +9,9 @@ using CapaEntidad;
 using System.IO;
 using System.Web.Services.Description;
 using System.Collections;
+using System.Threading.Tasks;
+using System.Data;
+using System.Globalization;
 
 namespace CapaPresentaciónTienda.Controllers
 {
@@ -161,7 +164,7 @@ namespace CapaPresentaciónTienda.Controllers
 
             string mensaje = string.Empty;
 
-            bool existe = new CN_Carrito().OperacionCarrito(idcliente, idproducto, true, out mensaje);
+            respuesta = new CN_Carrito().OperacionCarrito(idcliente, idproducto, sumar, out mensaje);
 
             return Json(new { respuesta = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
 
@@ -218,5 +221,64 @@ namespace CapaPresentaciónTienda.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<JsonResult> ProcesarPago(List<Carrito> oListaCarrito, Venta oVenta)
+        {
+            decimal total = 0;
+
+            DataTable detalle_venta = new DataTable();
+            detalle_venta.Locale = new CultureInfo("es-MX");
+            detalle_venta.Columns.Add("IdProducto", typeof(string));
+            detalle_venta.Columns.Add("Cantidad", typeof(int));
+            detalle_venta.Columns.Add("Total", typeof(decimal));
+
+            foreach (Carrito oCarrito in oListaCarrito)
+            {
+                decimal subtotal = Convert.ToDecimal(oCarrito.Cantidad.ToString()) * oCarrito.oProducto.Precio;
+
+                total += subtotal;
+
+                detalle_venta.Rows.Add(new object[]
+                {
+                    oCarrito.oProducto.IdProducto,
+                    oCarrito.Cantidad,
+                    subtotal
+                });
+            }
+
+            oVenta.MontoTotal = total;
+            oVenta.IdCliente = ((Cliente)Session["Cliente"]).IdCliente;
+
+            TempData["Venta"] = oVenta;
+            TempData["DetalleVenta"] = detalle_venta;
+
+            return Json(new {Status =  true, Link = "/Tienda/PagoEfectuado?idTransaccion=code0001&status=true"}, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> PagoEfectuado()
+        {
+            string idtransaccion = Request.QueryString["idTransaccion"];
+            bool status = Convert.ToBoolean(Request.QueryString["status"]);
+
+            ViewData["Status"] = status;
+
+            if (status)
+            {
+                Venta oVenta = (Venta)TempData["Venta"];
+
+                DataTable detalle_venta = (DataTable)TempData["DetalleVenta"];
+
+                oVenta.IdTransaccion = idtransaccion;
+
+                string mensaje = string.Empty;
+
+                bool respuesta = new CN_Venta().Registrar(oVenta, detalle_venta, out mensaje);
+
+                ViewData["IdTransaccion"] = oVenta.IdTransaccion;
+
+
+              }
+            return View();
+        }
     }
 }
