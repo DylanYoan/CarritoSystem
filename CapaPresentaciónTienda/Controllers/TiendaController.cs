@@ -13,6 +13,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using System.Data;
 using System.Globalization;
+using CapaPresentaciónTienda.Filter;
 
 namespace CapaPresentaciónTienda.Controllers
 {
@@ -217,6 +218,8 @@ namespace CapaPresentaciónTienda.Controllers
             return Json(new {lista = oLista}, JsonRequestBehavior.AllowGet);
         }
 
+        [ValidarSesion]
+        [Authorize]
         public ActionResult Carrito()
         {
             return View();
@@ -302,7 +305,7 @@ namespace CapaPresentaciónTienda.Controllers
 
             CN_Paypal opaypal = new CN_Paypal();
 
-            Response_Paypal < Response_Checkout > response_paypal = new Response_Paypal<Response_Checkout>();
+            Response_Paypal<Response_Checkout> response_paypal = new Response_Paypal<Response_Checkout>();
 
             response_paypal = await opaypal.CrearSolicitud(oCheckOutOrder);
 
@@ -310,6 +313,8 @@ namespace CapaPresentaciónTienda.Controllers
             return Json( response_paypal,JsonRequestBehavior.AllowGet );
         }
 
+        [ValidarSesion]
+        [Authorize]
         public async Task<ActionResult> PagoEfectuado()
         {
             string token = Request.QueryString["token"];
@@ -338,6 +343,35 @@ namespace CapaPresentaciónTienda.Controllers
 
               }
             return View();
+        }
+
+        [ValidarSesion]
+        [Authorize]
+        public ActionResult MisCompras()
+        {
+            int idcliente = ((Cliente)Session["Cliente"]).IdCliente;
+
+            List<DetalleVenta> oLista = new List<DetalleVenta>();
+
+            bool conversion;
+
+            oLista = new CN_Venta().ListarCompras(idcliente).Select(oc => new DetalleVenta()
+            {
+                oProducto = new Producto()
+                {
+                    Nombre = oc.oProducto.Nombre,
+                    Precio = oc.oProducto.Precio,
+                    Base64 = CN_Recursos.ConvertirBase64(Path.Combine(oc.oProducto.RutaImagen, oc.oProducto.NombreImagen), out conversion),
+                    Extension = Path.GetExtension(oc.oProducto.NombreImagen)
+
+                },
+                Cantidad = oc.Cantidad,
+                Total = oc.Total,
+                IdTransaccion = oc.IdTransaccion
+            }).ToList();
+
+            return View(oLista);
+
         }
     }
 }
