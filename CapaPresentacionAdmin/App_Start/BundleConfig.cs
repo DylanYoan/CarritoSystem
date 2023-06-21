@@ -33,6 +33,13 @@ namespace CapaPresentacionAdmin
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.bundle.js"));
+            
+            bundles.Add(new Bundle("~/bundles/login").Include(
+                      "~/Content/style_login.css"));
+
+            bundles.Add(new Bundle("~/bundles/Adminlogin").Include(
+                      "~/Content/AdminLogin.css",
+                      "~/Scripts/AdminLogin.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/DataTables/css/jquery.dataTables.css",

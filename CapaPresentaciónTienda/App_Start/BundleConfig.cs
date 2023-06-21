@@ -22,7 +22,7 @@ namespace CapaPresentaciónTienda
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.bundle.js",
                       "~/Scripts/fontawesome/all.min.js",
-                      "~/Scripts/loadingoverlay.min.js",
+                      "~/Scripts/jquery-loading-overlay/loadingoverlay.min.js",
                       "~/Scripts/sweetalert.min.js"
                       ));
 
@@ -30,6 +30,25 @@ namespace CapaPresentaciónTienda
                       "~/Content/site.css",
                       "~/Content/sweetalert.css"
                       ));
+            
+            bundles.Add(new StyleBundle("~/Content/Inicio").Include(
+                      "~/Content/backgroundTienda.css",
+                      "~/Content/styleTienda.css"
+                      ));
+            
+            bundles.Add(new StyleBundle("~/Content/DetalleProducto_Carrito").Include(
+                      "~/Content/styleTienda.css"
+                      ));
+            
+            bundles.Add(new StyleBundle("~/Content/Items").Include(
+                      "~/Content/backgroundTienda.css",
+                      "~/Content/itemsTienda.css"
+                      ));
+
+            bundles.Add(new StyleBundle("~/Content/Login").Include(
+                      "~/Content/login_styles.css"
+                      ));
+
         }
     }
 }

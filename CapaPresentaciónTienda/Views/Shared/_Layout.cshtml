@@ -7,27 +7,16 @@
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/css")
 </head>
-<body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand" href="#!">Mi Tienda</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="@Url.Action("Index","Tienda")">Inicio</a></li>
-                    @*<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>*@
-                </ul>
-                <form class="d-flex">
+<body class="loading">
 
+
+    <header>
+        <div class="inner">
+            <div class="burger"></div>
+            <nav>
+                <a class="active nav_a_main" href="@Url.Action("Inicio","Tienda")">Inicio</a>
+                <a class="nav_a_main" href="@Url.Action("Index","Tienda")">Productos</a>
+                <div class="right_part">
                     @if (Session["Cliente"] == null)
                     {
                         <a class="btn btn-outline-dark" aria-current="page" href="@Url.Action("Index","Acceso")"><i class="fas fa-sign-out-alt me-1"></i>Iniciar Sesión</a>
@@ -37,12 +26,12 @@
                         <a class="btn btn-outline-dark" href="@Url.Action("Carrito","Tienda")">
                             <i class="fas fa-shopping-cart me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="cantidadcarrito">0</span>
+                            <span class="badge bg-light ms-1 rounded-pill" id="cantidadcarrito">0</span>
                         </a>
 
                         <ul class="navbar-nav ms-auto ms-auto me-0 me-md-3 my-2 my-md-0">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw" style="font-size: 15px;"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="#!"><b>@User.Identity.Name</b></a></li>
                                     <li><a class="dropdown-item" href="@Url.Action("MisCompras","Tienda")"><b>Mis compras</b></a></li>
@@ -53,16 +42,15 @@
                         </ul>
                     }
 
-
-                </form>
-            </div>
+                </div>
+            </nav>
         </div>
-    </nav>
+    </header>
     @RenderBody()
 
-    <footer>
+    @*<footer>
         <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-    </footer>
+    </footer>*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

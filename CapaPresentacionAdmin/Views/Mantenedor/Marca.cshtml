@@ -28,7 +28,6 @@
             <thead>
                 <tr>
                     <th>Descripción</th>
-                    <th>Activo</th>
                     <th></th>
                 </tr>
             </thead>
@@ -56,13 +55,6 @@
                         <input type="text" class="form-control" id="txtdescripcion" autocomplete="off">
                     </div>
 
-                    <div class="col-sm-6">
-                        <label for="cboactivo" class="form-label">Activo</label>
-                        <select class="form-select" id="cboactivo">
-                            <option value="1">Si</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
 
                     <div class="row">
                         <div class="col-12">
@@ -101,16 +93,6 @@
             "columns": [
                 { "data": "Descripcion" },
                 {
-                    "data": "Activo", "render": function (valor) {
-
-                        if (valor) {
-                            return '<span class="badge bg-success">Si</span>'
-                        } else {
-                            return '<span class="badge bg-danger">No</span>'
-                        }
-                    }
-                },
-                {
                     "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
                         '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
                     "orderable": false,
@@ -129,7 +111,6 @@
 
             $("#txtid").val(0)
             $("#txtdescripcion").val("");
-            $("#cboactivo").val(1);
 
 
 
@@ -138,7 +119,6 @@
             if (json != null) {
                 $("#txtid").val(json.IdMarca)
                 $("#txtdescripcion").val(json.Descripcion);
-                $("#cboactivo").val(json.Activo == true ? 1 : 0);
             }
 
             $("#FormModal").modal("show")
@@ -196,7 +176,6 @@
             var Marca = {
                 IdMarca: $("#txtid").val(),
                 Descripcion: $("#txtdescripcion").val(),
-                Activo: $("#cboactivo").val() == 1 ? true : false
 
             }
 

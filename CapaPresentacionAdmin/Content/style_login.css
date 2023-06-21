@@ -1,0 +1,218 @@
+﻿/* 
+Animacion Backgroud */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap');
+
+/* Variables */
+:root {
+    --shadows-small: 700;
+    --shadows-medium: 200;
+    --shadows-big: 100;
+}
+
+html {
+    height: 100%;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    background-clip: content-box;
+    overflow: hidden;
+    font-family: 'lato', sans-serif;
+}
+
+#stars {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: var(--shadows-small);
+    animation: animStar 50s linear infinite;
+}
+
+    #stars:after {
+        content: '';
+        position: absolute;
+        top: 2000px;
+        width: 1px;
+        height: 1px;
+        background: transparent;
+        box-shadow: var(--shadows-small);
+    }
+
+#stars2 {
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: var(--shadows-medium);
+    animation: animStar 100s linear infinite;
+}
+
+    #stars2:after {
+        content: '';
+        position: absolute;
+        top: 2000px;
+        width: 2px;
+        height: 2px;
+        background: transparent;
+        box-shadow: var(--shadows-medium);
+    }
+
+#stars3 {
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: var(--shadows-big);
+    animation: animStar 150s linear infinite;
+}
+
+    #stars3:after {
+        content: '';
+        position: absolute;
+        top: 2000px;
+        width: 3px;
+        height: 3px;
+        background: transparent;
+        box-shadow: var(--shadows-big);
+    }
+
+#title {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    color: #FFF;
+    text-align: center;
+    font-family: 'lato', sans-serif;
+    font-weight: 300;
+    font-size: 50px;
+    letter-spacing: 10px;
+    margin-top: -60px;
+    padding-left: 10px;
+}
+
+    #title span {
+        background: -webkit-linear-gradient(white, #38495a);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+
+@keyframes animStar {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-2000px);
+    }
+}
+
+/* Estilos del Login */
+
+
+
+
+
+
+
+
+
+#container_main {
+    width: 100vw;
+    height: 100vh;
+}
+
+#container_login {
+    width: 400px;
+    height: 350px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    position: absolute;
+}
+
+form {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+#container_grid {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-rows: repeat(3, 80px);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+        "user user user"
+        "pass pass pass"
+        "restore restore btn";
+}
+
+h1 {
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    font-size: 50px;
+}
+
+input {
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    width: 350px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border: none;
+    font-size: 17px;
+}
+
+
+    input::placeholder {
+        color: #FFF;
+        font-weight: 200;
+    }
+
+i {
+    color: #fff;
+    font-size: 15px;
+    right: 50px;
+}
+
+.container_user {
+    grid-area: user;
+}
+
+.container_pass {
+    grid-area: pass;
+}
+
+.container_btn {
+    grid-area: btn;
+}
+
+.container_a {
+    grid-area: restore;
+}
+
+a {
+    font-weight: 200;
+    font-size: 17px;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+}
+
+
+#btn {
+    width: 130px;
+    height: 40px;
+    font-size: 17px;
+    border-radius: 15px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #FFF;
+}
+
+    #btn:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+    }

@@ -22,7 +22,7 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    string query = "select IdMarca, Descripcion, Activo from Marca";
+                    string query = "select IdMarca, Descripcion from Marca";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
 
@@ -35,8 +35,7 @@ namespace CapaDatos
                             lista.Add(new Marca()
                             {
                                 IdMarca = Convert.ToInt32(dr["IdMarca"]),
-                                Descripcion = dr["Descripcion"].ToString(),
-                                Activo = Convert.ToBoolean(dr["Activo"]),
+                                Descripcion = dr["Descripcion"].ToString()
                             });
                         }
                     }
@@ -63,7 +62,6 @@ namespace CapaDatos
                 {
                     SqlCommand cmd = new SqlCommand("sp_RegistrarMarca", oconexion);
                     cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
-                    cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -97,7 +95,6 @@ namespace CapaDatos
                     SqlCommand cmd = new SqlCommand("sp_EditarMarca", oconexion);
                     cmd.Parameters.AddWithValue("IdMarca", obj.IdMarca);
                     cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
-                    cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -164,7 +161,7 @@ namespace CapaDatos
 
                     sb.AppendLine("select distinct m.IdMarca, m.Descripcion from PRODUCTO p");
                     sb.AppendLine("inner join CATEGORIA c on c.IdCategoria = p.IdCategoria");
-                    sb.AppendLine("inner join MARCA m on m.IdMarca = p.IdMarca and m.Activo = 1");
+                    sb.AppendLine("inner join MARCA m on m.IdMarca = p.IdMarca");
                     sb.AppendLine("where c.IdCategoria = iif(@idcategoria = 0, c.IdCategoria, @idcategoria)");
 
                     

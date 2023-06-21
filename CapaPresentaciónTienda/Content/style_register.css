@@ -1,0 +1,171 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap');
+
+/* Variables */
+:root {
+    --shadows-small: 700;
+    --shadows-medium: 200;
+    --shadows-big: 100;
+    --bg-color: #f4f4f2;
+    --dash-color: #e8e8e8;
+    --cards-color: #bbbfca;
+    --text-color: #495464;
+}
+
+html {
+    height: 100%;
+    background: var(--dash-color);
+    background-clip: content-box;
+    overflow: hidden;
+    font-family: 'lato', sans-serif;
+    color: var(--text-color);
+}
+
+
+#title {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    color: #FFF;
+    text-align: center;
+    font-family: 'lato', sans-serif;
+    font-weight: 300;
+    font-size: 50px;
+    letter-spacing: 10px;
+    margin-top: -60px;
+    padding-left: 10px;
+}
+
+    #title span {
+        background: -webkit-linear-gradient(white, #38495a);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+
+
+/* Estilos del Login */
+
+#container_main {
+    width: 100vw;
+    height: 100vh;
+}
+
+#container_login {
+    width: 400px;
+    height: 350px;
+    transform: translate(-50%, -50%);
+    top: 30%;
+    left: 50%;
+    position: absolute;
+}
+
+form {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+#container_grid {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-rows: repeat(5, 70px);
+    grid-template-columns: repeat(2, 1.5fr);
+    grid-gap: 10px;
+    grid-template-areas:
+        "name last"
+        "email email"
+        "pass confirm"
+        "btn btn"
+        "iniciar iniciar";
+}
+
+h1 {
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    font-size: 50px;
+}
+
+input {
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    width: 250px;
+    height: 40px;
+    border: 1px solid var(--text-color) !important;
+    border-radius: 15px;
+    border: none;
+    font-size: 17px;
+}
+
+
+    input::placeholder {
+        color: var(--text-color);
+        font-weight: 200;
+    }
+
+i {
+    color: var(--text-color);
+    font-size: 15px;
+    right: 50px;
+}
+
+.container_user_name {
+    grid-area: name;
+}
+
+.container_user_last {
+    grid-area: last;
+}
+
+.container_user_email {
+    grid-area: email;
+}
+
+    .container_user_email input {
+        width: 520px;
+    }
+
+.container_user_pass {
+    grid-area: pass;
+}
+
+.container_user_confirmpass {
+    grid-area: confirm;
+}
+
+.container_btn {
+    grid-area: btn;
+}
+
+.container_a {
+    grid-area: iniciar;
+}
+
+a {
+    font-weight: 200;
+    font-size: 17px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+}
+
+
+#btn {
+    width: 130px;
+    height: 40px;
+    font-size: 17px;
+    border-radius: 15px;
+    border: 1px solid var(--text-color);
+    background-color: var(--dash-color);
+    color: var(--text-color);
+}
+
+    #btn:hover {
+        background-color: var(--text-color);
+        color: var(--dash-color);
+        cursor: pointer;
+    }
