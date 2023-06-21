@@ -9,8 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>CambiarClave</title>
-    <link href="~/Content/Site.css" rel="stylesheet" />
-
+    <link href="~/Content/style_cambiarclave.css" rel="stylesheet" />
 </head>
 <body class="bg-primary">
 
@@ -18,19 +17,20 @@
 
         <div id="container_login">
             <form action="@Url.Action("CambiarClave","Acceso")" method="post">
+                <input class="form-control" id="inputPassword" type="hidden" value="@TempData["IdCliente"]" name="idcliente" />
 
                 <h1>Cambiar Clave</h1>
                 <div id="container_grid">
                     <div class="container_actual">
-                        <input class="form-control" id="inputPassword" type="password" name="claveactual" value="@ViewData["vClave"]" placeholder="Clave actual" />
+                        <input class="form-control" id="inputPassword" type="password" name="claveactual" value="@ViewData["vClave"]" placeholder="Clave actual"  style="color: black;" />
 
                     </div>
                     <div class="container_nueva">
-                        <input class="form-control" id="inputPassword" type="password" name="nuevaclave" placeholder="Nueva clave" />
+                        <input class="form-control" id="inputPassword" type="password" name="nuevaclave" placeholder="Nueva clave" style="color: black;" />
                     </div>
 
                     <div class="container_confirmarnueva">
-                        <input class="form-control" id="inputPassword" type="password" name="confirmarclave" placeholder="Confirmar Nueva Clave" />
+                        <input class="form-control" id="inputPassword" type="password" name="confirmarclave" placeholder="Confirmar Nueva Clave" style="color: black;" />
                     </div>
 
                     <div class="container_btn">

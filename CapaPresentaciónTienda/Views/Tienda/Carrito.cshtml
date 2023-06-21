@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container my-5" >
+<div class="container" style="margin-top: 100px;" >
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -77,19 +77,19 @@
                                     <h5 class="card-title">Detalle Envio</h5>
                                     <form>
                                         <div class="mb-2">
-                                            <label for="cbodepartamento" class="form-label">Departamento: </label>
+                                            <label for="cbodepartamento" class="form-label">País: </label>
                                             <select class="form-select form-select-sm" id="cbodepartamento"></select>
 
                                         </div>
 
                                         <div class="mb-2">
-                                            <label for="cboprovincia" class="form-label">Provincia: </label>
+                                            <label for="cboprovincia" class="form-label">Estado: </label>
                                             <select class="form-select form-select-sm" id="cboprovincia"></select>
 
                                         </div>
 
                                         <div class="mb-2">
-                                            <label for="cbodistrito" class="form-label">Distrito: </label>
+                                            <label for="cbodistrito" class="form-label">Municipio: </label>
                                             <select class="form-select form-select-sm" id="cbodistrito"></select>
 
                                         </div>
@@ -206,95 +206,12 @@
 
 
 
-            ListarDepartamento()
+            /*ListarDepartamento()*/
         })
 
-        function ListarDepartamento() {
+        
 
-            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected":"true" }).text("Seleccionar").appendTo("#cbodepartamento")
-
-
-            jQuery.ajax({
-                url: '@Url.Action("ObtenerDepartamento", "Tienda")',
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    if (data.lista != null) {
-                        $.each(data.lista, function (i, item) {
-                            $("<option>").attr({"value":item.IdDepartamento}).text(item.Descripcion).appendTo("#cbodepartamento")
-                        })
-
-                        ListarProvincia();
-                    } else {
-
-                    }
-                }
-
-            });
-        }
-
-        $("#cbodepartamento").on("change", function () {
-            ListarProvincia();
-        })
-
-        function ListarProvincia() {
-
-            $("#cboprovincia").html("")
-
-            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected":"true" }).text("Seleccionar").appendTo("#cboprovincia")
-
-
-            jQuery.ajax({
-                url: '@Url.Action("ObtenerProvincia", "Tienda")',
-                type: "POST",
-                data: JSON.stringify({ IdDepartamento: $("#cbodepartamento option:selected").val() }),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    if (data.lista != null) {
-                        $.each(data.lista, function (i, item) {
-                            $("<option>").attr({ "value": item.IdProvincia }).text(item.Descripcion).appendTo("#cboprovincia")
-                        })
-
-                        ListarDistrito
-                    } else {
-
-                    }
-                }
-
-            });
-        }
-
-        $("#cboprovincia").on("change", function () {
-            ListarDistrito();
-        })
-
-        function ListarDistrito() {
-
-            $("#cbodistrito").html("")
-
-            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#cbodistrito")
-
-
-            jQuery.ajax({
-                url: '@Url.Action("ObtenerDistrito", "Tienda")',
-                type: "POST",
-                data: JSON.stringify({ IdDepartamento: $("#cbodepartamento option:selected").val(), IdProvincia: $("#cboprovincia option:selected").val() }),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    if (data.lista != null) {
-                        $.each(data.lista, function (i, item) {
-                            $("<option>").attr({ "value": item.IdDistrito }).text(item.Descripcion).appendTo("#cbodistrito")
-                        })
-                    } else {
-
-                    }
-                }
-
-            });
-        }
+        
 
         function sumarTotal() {
             var sumaTotal = parseFloat(0)
@@ -492,6 +409,92 @@
             })
         }
 
+        $.ajax({
+            url: 'https://www.universal-tutorial.com/api/getaccesstoken',
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                "api-token": "6jC38XsHpbGobvly0sYbG2kIxH7x2FeAN5MjA_OpnbO2SeZXcg70XXHgJD4N2u3_6d4",
+                "user-email": "dylanyoanmc@gmail.com"
+            },
+            success: function (data) {
+                if (data.auth_token) {
+                    var auth_token = data.auth_token;
+                    $.ajax({
+                        url: 'https://www.universal-tutorial.com/api/countries/',
+                        method: 'GET',
+                        headers: {
+                            "Authorization": "Bearer " + auth_token,
+                            "Accept": "application/json"
+                        },
+                        success: function (data) {
+                            var countries = data;
+                            var comboCountries = "<option value=''>Seleccionar</option>";
+                            countries.forEach(element => {
+                                comboCountries += '<option value="' + element['country_name'] + '">' + element['country_name'] + '</option>';
+                            });
+                            $("#cbodepartamento").html(comboCountries);
+                            // State list
+                            $("#cbodepartamento").on("change", function () {
+                                var country = this.value;
+                                $.ajax({
+                                    url: 'https://www.universal-tutorial.com/api/states/' + country,
+                                    method: 'GET',
+                                    headers: {
+                                        "Authorization": "Bearer " + auth_token,
+                                        "Accept": "application/json"
+                                    },
+                                    success: function (data) {
+                                        var states = data;
+                                        var comboStates = "<option value=''>Seleccionar</option>";
+                                        states.forEach(element => {
+                                            comboStates += '<option value="' + element['state_name'] + '">' + element['state_name'] + '</option>';
+                                        });
+                                        $("#cboprovincia").html(comboStates);
+                                        // City list
+                                        $("#cboprovincia").on("change", function () {
+                                            var state = this.value;
+                                            $.ajax({
+                                                url: 'https://www.universal-tutorial.com/api/cities/' + state,
+                                                method: 'GET',
+                                                headers: {
+                                                    "Authorization": "Bearer " + auth_token,
+                                                    "Accept": "application/json"
+                                                },
+                                                success: function (data) {
+                                                    var cities = data;
+                                                    var comboCities = "<option value=''>Seleccionar</option>";
+                                                    cities.forEach(element => {
+                                                        comboCities += '<option value="' + element['city_name'] + '">' + element['city_name'] + '</option>';
+                                                    });
+                                                    $("#cbodistrito").html(comboCities);
+                                                    if (thisClass.cityValue) { $("#cbodistrito").val(thisClass.cityValue).trigger("change"); }
+                                                },
+                                                error: function (e) {
+                                                    console.log("Error al obtener countries: " + e);
+                                                }
+                                            });
+                                        });
+                                        if (thisClass.stateValue) { $("#cboprovincia").val(thisClass.stateValue).trigger("change"); }
+                                    },
+                                    error: function (e) {
+                                        console.log("Error al obtener countries: " + e);
+                                    }
+                                });
+                            });
+                            if (thisClass.countryValue) { $("#cbodepartamento").val(thisClass.countryValue).trigger("change"); }
+                        },
+                        error: function (e) {
+                            console.log("Error al obtener countries: " + e);
+                        }
+                    });
+                }
+            },
+            error: function (e) {
+                console.log("Error al obtener countries: " + e);
+            }
+        });
+        
     </script>
 
 }

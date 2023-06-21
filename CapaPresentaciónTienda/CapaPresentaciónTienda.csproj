@@ -162,6 +162,7 @@
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
     <Content Include="Content\solid.min.css" />
+    <Content Include="Content\Style.css" />
     <Content Include="Content\styleTienda.css" />
     <Content Include="Content\style_cambiarclave.css" />
     <Content Include="Content\style_reestablecer.css" />

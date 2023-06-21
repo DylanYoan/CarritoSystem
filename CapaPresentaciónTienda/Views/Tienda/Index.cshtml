@@ -219,21 +219,30 @@
                                 ),
                                 $("<div>").addClass("card-info").append(
                                     $("<p>").addClass("text-title").text(element.Nombre),
-                                    $("<p>").addClass("text-desc").text(element.Descripcion)
-
+                                    $("<p>").addClass("text-desc").text(element.Descripcion),
+                                    $("<span>").addClass("text-title").text("$" + element.Precio.toFixed(2) + "USD")
                                 ),
                                 $("<div>").addClass("card-footer mt-auto").append(
-                                    $("<span>").addClass("text-title").text("$" + element.Precio.toFixed(2) +  "USD")
-                                    @if (Session["Cliente"] != null)
-                                    {
-                                        @:, $("<a>").attr({ "href": "@Url.Action("Carrito","Tienda")", "style": "color: black; width: 20px; height: 20px;" }).append($("<i>").addClass("fas fa-shopping-cart me-1"))
-                                    }
+
+                                    $("<div>").addClass("d-grid gap-2").append(
+
+                                        @if (Session["Cliente"] != null)
+                                        {
+                                            @*@:$("<a>").addClass("agregarcarrito").data("idproducto", element.IdProducto).attr({ "href": "@Url.Action("Carrito","Tienda")", "style": "color: black; width: 20px; height: 20px;" }).append(),*@
+                                            @:$("<button>").addClass("btn btn-outline-dark mt-auto agregarcarrito").data("idproducto", element.IdProducto).append($("<i>").addClass("fas fa-shopping-cart me-1")),
+
+                                        }
+                                        $("<a>").addClass("btn btn-dark mt-auto")
+                                                .attr({ "href": "@Url.Action("DetalleProducto","Tienda")" + "?idproducto=" + element.IdProducto })
+                                                .text("Ver detalle")
+                                    )
+
                                 )
 
                             )
                         ).appendTo("#contenedor_producto")
 
-                        
+
                     })
                 },
                 beforeSend: function () {

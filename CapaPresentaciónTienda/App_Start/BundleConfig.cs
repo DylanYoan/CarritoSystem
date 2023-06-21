@@ -28,7 +28,8 @@ namespace CapaPresentaciónTienda
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/site.css",
-                      "~/Content/sweetalert.css"
+                      "~/Content/sweetalert.css",
+                      "~/Content/Style.css"
                       ));
             
             bundles.Add(new StyleBundle("~/Content/Inicio").Include(
