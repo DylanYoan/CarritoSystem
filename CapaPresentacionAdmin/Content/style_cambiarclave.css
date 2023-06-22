@@ -1,6 +1,4 @@
-﻿/* 
-Animacion Backgroud */
-
+﻿
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap');
 
 /* Variables */
@@ -16,11 +14,21 @@ Animacion Backgroud */
 
 html {
     height: 100%;
-    background: var(--bg-color);
+    background: var(--dash-color);
     background-clip: content-box;
     overflow: hidden;
     font-family: 'lato', sans-serif;
+    color: var(--text-color);
 }
+
+#stars {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: var(--shadows-small);
+    animation: animStar 50s linear infinite;
+}
+
 
 #title {
     position: absolute;
@@ -46,8 +54,14 @@ html {
 
 
 
-
 /* Estilos del Login */
+
+
+
+
+
+
+
 
 
 #container_main {
@@ -59,7 +73,7 @@ html {
     width: 400px;
     height: 350px;
     transform: translate(-50%, -50%);
-    top: 50%;
+    top: 40%;
     left: 50%;
     position: absolute;
 }
@@ -74,18 +88,19 @@ form {
     display: grid;
     justify-content: center;
     align-items: center;
-    grid-template-rows: repeat(3, 80px);
+    grid-template-rows: repeat(4, 80px);
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-        "user user user"
-        "pass pass pass"
-        "restore restore btn";
+        "actual actual actual"
+        "nueva nueva nueva"
+        "confirmar confirmar confirmar"
+        "a a btn";
 }
 
 h1 {
     font-weight: 700;
     font-family: 'Poppins', sans-serif;
-    color: #fff;
+    color: var(--text-color);
     font-size: 50px;
 }
 
@@ -95,7 +110,7 @@ input {
     color: #fff;
     width: 350px;
     height: 40px;
-    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--text-color) !important;
     border-radius: 15px;
     border: none;
     font-size: 17px;
@@ -103,22 +118,26 @@ input {
 
 
     input::placeholder {
-        color: #FFF;
+        color: var(--text-color);
         font-weight: 200;
     }
 
 i {
-    color: #fff;
+    color: var(--text-color);
     font-size: 15px;
     right: 50px;
 }
 
-.container_user {
-    grid-area: user;
+.container_actual {
+    grid-area: actual;
 }
 
-.container_pass {
-    grid-area: pass;
+.container_nueva {
+    grid-area: nueva;
+}
+
+.container_confirmarnueva {
+    grid-area: confirmar;
 }
 
 .container_btn {
@@ -133,7 +152,7 @@ a {
     font-weight: 200;
     font-size: 17px;
     font-family: 'Poppins', sans-serif;
-    color: #fff;
+    color: var(--text-color);
 }
 
 
@@ -142,9 +161,9 @@ a {
     height: 40px;
     font-size: 17px;
     border-radius: 15px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #FFF;
+    border: 1px solid var(--text-color);
+    background-color: var(--dash-color);
+    color: var(--text-color);
 }
 
     #btn:hover {

@@ -113,7 +113,7 @@ namespace CapaPresentaciónTienda.Controllers
 
             string mensaje = string.Empty;
 
-            if (existe)
+            if (!existe)
             {
                 mensaje = "El producto ya existe en el carrito";
             }

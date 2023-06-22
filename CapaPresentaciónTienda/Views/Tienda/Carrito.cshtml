@@ -468,21 +468,21 @@
                                                         comboCities += '<option value="' + element['city_name'] + '">' + element['city_name'] + '</option>';
                                                     });
                                                     $("#cbodistrito").html(comboCities);
-                                                    if (thisClass.cityValue) { $("#cbodistrito").val(thisClass.cityValue).trigger("change"); }
+                                                //    if (thisClass.cityValue) { $("#cbodistrito").val(thisClass.cityValue).trigger("change"); }
                                                 },
                                                 error: function (e) {
                                                     console.log("Error al obtener countries: " + e);
                                                 }
                                             });
                                         });
-                                        if (thisClass.stateValue) { $("#cboprovincia").val(thisClass.stateValue).trigger("change"); }
+                                    //    if (thisClass.stateValue) { $("#cboprovincia").val(thisClass.stateValue).trigger("change"); }
                                     },
                                     error: function (e) {
                                         console.log("Error al obtener countries: " + e);
                                     }
                                 });
                             });
-                            if (thisClass.countryValue) { $("#cbodepartamento").val(thisClass.countryValue).trigger("change"); }
+                        //    if (thisClass.countryValue) { $("#cbodepartamento").val(thisClass.countryValue).trigger("change"); }
                         },
                         error: function (e) {
                             console.log("Error al obtener countries: " + e);
